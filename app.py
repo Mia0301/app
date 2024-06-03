@@ -7,7 +7,7 @@ import datetime
 html_temp = """
 		<div style="background-color:#BA55D3;padding:15px;border-radius:10px">
 		<h1 style="color:white;text-align:center;">聯詠(3034)金融指標分析 </h1>
-		<h2 style="color:white;text-align:center;">Financial Indicators Analysis of Novatek Microelectronics Corp (TPE:3034) </h2>
+		<h2 style="color:white;text-align:center;font-size:8px;">Financial Indicators Analysis of Novatek Microelectronics Corp (TPE:3034) </h2>
 		</div>
 		"""
 stc.html(html_temp)
