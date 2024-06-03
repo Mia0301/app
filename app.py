@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import streamlit.components.v1 as stc 
+import matplotlib 
 import matplotlib.pyplot as plt
 import datetime
 html_temp = """
