@@ -72,8 +72,8 @@ df = calculate_bollinger_bands(df)
 df = calculate_donchian_channels(df)
 df = calculate_kd(df)
 df = calculate_obv(df)
-
-fig, axs = plt.subplots(5, figsize=(14, 20))
+df = calculate_rsi(df)
+fig, axs = plt.subplots(7, figsize=(14, 30))
 
 
 # 繪製MACD
@@ -84,8 +84,9 @@ axs[1].bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color=
 axs[1].legend()
 axs[1].set_title('MACD')
 st.pyplot(fig)
-st.expander("Bollinger Bands")
+
 # 繪製布林通道
+st.expander("Bollinger Bands")
 axs[0].plot(df['Date'], df['Close'], label='Close Price')
 axs[0].plot(df['Date'], df['SMA'], label='SMA')
 axs[0].plot(df['Date'], df['Upper Band'], label='Upper Band')
@@ -94,8 +95,9 @@ axs[0].fill_between(df['Date'], df['Lower Band'], df['Upper Band'], color='gray'
 axs[0].legend()
 axs[0].set_title('Bollinger Bands')
 st.pyplot(fig)
+
+
 st.expander("DC")
-# 繪製唐奇安通道
 axs[2].plot(df['Date'], df['Close'], label='Close Price')
 axs[2].plot(df['Date'], df['Upper Channel'], label='Upper Channel')
 axs[2].plot(df['Date'], df['Lower Channel'], label='Lower Channel')
@@ -103,8 +105,8 @@ axs[2].fill_between(df['Date'], df['Lower Channel'], df['Upper Channel'], color=
 axs[2].legend()
 axs[2].set_title('DC')
 st.pyplot(fig)
+
 st.expander("KD")
-# 繪製K、D線
 axs[3].plot(df['Date'], df['%K'], label='%K')
 axs[3].plot(df['Date'], df['%D'], label='%D')
 axs[3].legend()
@@ -112,7 +114,6 @@ axs[3].set_title('KD')
 st.pyplot(fig)
 
 st.expander("OBV")
-# 繪製OBV
 axs[4].plot(df['Date'], df['OBV'], label='OBV')
 axs[4].legend()
 axs[4].set_title('OBV')
