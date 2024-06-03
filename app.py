@@ -132,7 +132,7 @@ with st.expander("Bollinger Bands"):
 # 绘制MACD
 with st.expander("MACD"):
     fig, ax = plt.subplots()
-    plot_macd(ax, filtered_df)
+    plot_macd(ax, df)
     st.pyplot(fig)
 
 # 绘制唐奇安通道 (Donchian Channels)
