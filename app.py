@@ -92,29 +92,29 @@ with st.expander("MACD"):
 # 绘制唐奇安通道 (Donchian Channels)
 with st.expander("Donchian Channels"):
     fig, ax = plt.subplots()
-    plot_donchian_channels(ax, filtered_df)
+    plot_donchian_channels(ax, df)
     st.pyplot(fig)
 
 # 绘制K、D线 (K and D lines)
 with st.expander("K and D lines"):
     fig, ax = plt.subplots()
-    plot_kd(ax, filtered_df)
+    plot_kd(ax, df)
     st.pyplot(fig)
 
 # 绘制OBV
 with st.expander("OBV"):
     fig, ax = plt.subplots()
-    plot_obv(ax, filtered_df)
+    plot_obv(ax, df)
     st.pyplot(fig)
 
 # 绘制K线图 (Candlestick Chart) 移动平均线
 with st.expander("Candlestick Chart with Moving Averages"):
     fig, ax = plt.subplots()
-    plot_candlestick_ma(ax, filtered_df)
+    plot_candlestick_ma(ax, df)
     st.pyplot(fig)
 
 # 绘制RSI
 with st.expander("RSI"):
     fig, ax = plt.subplots()
-    plot_rsi(ax, filtered_df)
+    plot_rsi(ax, df)
     st.pyplot(fig)
