@@ -25,6 +25,9 @@ start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
 end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
 df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 
+Date = start_date.strftime("%Y-%m-%d")
+
+
 # 定義指標的計算函數
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
@@ -55,7 +58,14 @@ def calculate_kd(df, period=14):
 def calculate_obv(df):
     df['OBV'] = (df['Volume'] * ((df['Close'] - df['Close'].shift(1)) > 0).astype(int) - df['Volume'] * ((df['Close'] - df['Close'].shift(1)) < 0).astype(int)).cumsum()
     return df
-
+	
+def calculate_rsi(df, period=14):
+    delta = df['Close'].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=period).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=period).mean()
+    rs = gain / loss
+    df['RSI'] = 100 - (100 / (1 + rs))
+    return df
 # 應用各種指標的計算
 df = calculate_macd(df)
 df = calculate_bollinger_bands(df)
@@ -73,8 +83,8 @@ axs[1].plot(df['Date'], df['Signal'], label='Signal')
 axs[1].bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color='gray')
 axs[1].legend()
 axs[1].set_title('MACD')
-
-st.expander("布林通道")
+st.pyplot(fig)
+st.expander("Bollinger Bands")
 # 繪製布林通道
 axs[0].plot(df['Date'], df['Close'], label='Close Price')
 axs[0].plot(df['Date'], df['SMA'], label='SMA')
@@ -82,29 +92,44 @@ axs[0].plot(df['Date'], df['Upper Band'], label='Upper Band')
 axs[0].plot(df['Date'], df['Lower Band'], label='Lower Band')
 axs[0].fill_between(df['Date'], df['Lower Band'], df['Upper Band'], color='gray', alpha=0.3)
 axs[0].legend()
-axs[0].set_title('布林通道')
-
-st.expander("唐奇安通道")
+axs[0].set_title('Bollinger Bands')
+st.pyplot(fig)
+st.expander("DC")
 # 繪製唐奇安通道
 axs[2].plot(df['Date'], df['Close'], label='Close Price')
 axs[2].plot(df['Date'], df['Upper Channel'], label='Upper Channel')
 axs[2].plot(df['Date'], df['Lower Channel'], label='Lower Channel')
 axs[2].fill_between(df['Date'], df['Lower Channel'], df['Upper Channel'], color='gray', alpha=0.3)
 axs[2].legend()
-axs[2].set_title('唐奇安通道')
-
-st.expander("KD線")
+axs[2].set_title('DC')
+st.pyplot(fig)
+st.expander("KD")
 # 繪製K、D線
 axs[3].plot(df['Date'], df['%K'], label='%K')
 axs[3].plot(df['Date'], df['%D'], label='%D')
 axs[3].legend()
-axs[3].set_title('KD線')
+axs[3].set_title('KD')
+st.pyplot(fig)
 
 st.expander("OBV")
 # 繪製OBV
 axs[4].plot(df['Date'], df['OBV'], label='OBV')
 axs[4].legend()
 axs[4].set_title('OBV')
+st.pyplot(fig)
 
-# 顯示圖表
+st.expander("Candlestick Chart with Moving Averages")
+axs[5].plot(df['Date'], df['Close'], label='Close Price')
+axs[5].plot(df['Date'], df['Close'].rolling(window=20).mean(), label='20-day MA')
+axs[5].plot(df['Date'], df['Close'].rolling(window=50).mean(), label='50-day MA')
+axs[5].legend()
+axs[5].set_title('Candlestick Chart with Moving Averages')
+st.pyplot(fig)
+
+st.expander("RSI")
+axs[6].plot(df['Date'], df['RSI'], label='RSI')
+axs[6].axhline(70, color='red', linestyle='--')
+axs[6].axhline(30, color='green', linestyle='--')
+axs[6].legend()
+axs[6].set_title('RSI')
 st.pyplot(fig)
