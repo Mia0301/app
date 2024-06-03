@@ -80,7 +80,7 @@ def plot_rsi(ax, df):
 # 绘制布林通道 (Bollinger Bands)
 with st.expander("Bollinger Bands"):
     fig, ax = plt.subplots()
-    plot_bollinger_bands(ax, filtered_df)
+    plot_bollinger_bands(ax, df)
     st.pyplot(fig)
 
 # 绘制MACD
