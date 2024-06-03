@@ -83,7 +83,6 @@ axs[1].plot(df['Date'], df['Signal'], label='Signal')
 axs[1].bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color='gray')
 axs[1].legend()
 axs[1].set_title('MACD')
-st.pyplot(fig)
 
 # 繪製布林通道
 st.expander("Bollinger Bands")
@@ -94,7 +93,6 @@ axs[0].plot(df['Date'], df['Lower Band'], label='Lower Band')
 axs[0].fill_between(df['Date'], df['Lower Band'], df['Upper Band'], color='gray', alpha=0.3)
 axs[0].legend()
 axs[0].set_title('Bollinger Bands')
-st.pyplot(fig)
 
 
 st.expander("DC")
@@ -104,20 +102,19 @@ axs[2].plot(df['Date'], df['Lower Channel'], label='Lower Channel')
 axs[2].fill_between(df['Date'], df['Lower Channel'], df['Upper Channel'], color='gray', alpha=0.3)
 axs[2].legend()
 axs[2].set_title('DC')
-st.pyplot(fig)
+
 
 st.expander("KD")
 axs[3].plot(df['Date'], df['%K'], label='%K')
 axs[3].plot(df['Date'], df['%D'], label='%D')
 axs[3].legend()
 axs[3].set_title('KD')
-st.pyplot(fig)
+
 
 st.expander("OBV")
 axs[4].plot(df['Date'], df['OBV'], label='OBV')
 axs[4].legend()
 axs[4].set_title('OBV')
-st.pyplot(fig)
 
 st.expander("Candlestick Chart with Moving Averages")
 axs[5].plot(df['Date'], df['Close'], label='Close Price')
@@ -125,7 +122,7 @@ axs[5].plot(df['Date'], df['Close'].rolling(window=20).mean(), label='20-day MA'
 axs[5].plot(df['Date'], df['Close'].rolling(window=50).mean(), label='50-day MA')
 axs[5].legend()
 axs[5].set_title('Candlestick Chart with Moving Averages')
-st.pyplot(fig)
+
 
 st.expander("RSI")
 axs[6].plot(df['Date'], df['RSI'], label='RSI')
@@ -133,4 +130,5 @@ axs[6].axhline(70, color='red', linestyle='--')
 axs[6].axhline(30, color='green', linestyle='--')
 axs[6].legend()
 axs[6].set_title('RSI')
+
 st.pyplot(fig)
