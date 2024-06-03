@@ -66,14 +66,14 @@ fig, axs = plt.subplots(5, figsize=(14, 20))
 
 
 # 繪製MACD
-st.expander("繪製MACD")
+st.expander("MACD")
 axs[1].plot(df['Date'], df['MACD'], label='MACD')
 axs[1].plot(df['Date'], df['Signal'], label='Signal')
 axs[1].bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color='gray')
 axs[1].legend()
 axs[1].set_title('MACD')
 
-st.expander("繪製布林通道")
+st.expander("布林通道")
 # 繪製布林通道
 axs[0].plot(df['Date'], df['Close'], label='Close Price')
 axs[0].plot(df['Date'], df['SMA'], label='SMA')
@@ -83,7 +83,7 @@ axs[0].fill_between(df['Date'], df['Lower Band'], df['Upper Band'], color='gray'
 axs[0].legend()
 axs[0].set_title('布林通道')
 
-st.expander("繪製唐奇安通道")
+st.expander("唐奇安通道")
 # 繪製唐奇安通道
 axs[2].plot(df['Date'], df['Close'], label='Close Price')
 axs[2].plot(df['Date'], df['Upper Channel'], label='Upper Channel')
@@ -92,14 +92,14 @@ axs[2].fill_between(df['Date'], df['Lower Channel'], df['Upper Channel'], color=
 axs[2].legend()
 axs[2].set_title('唐奇安通道')
 
-st.expander("繪製K、D線")
+st.expander("KD線")
 # 繪製K、D線
 axs[3].plot(df['Date'], df['%K'], label='%K')
 axs[3].plot(df['Date'], df['%D'], label='%D')
 axs[3].legend()
-axs[3].set_title('K、D線')
+axs[3].set_title('KD線')
 
-st.expander("繪製OBV")
+st.expander("OBV")
 # 繪製OBV
 axs[4].plot(df['Date'], df['OBV'], label='OBV')
 axs[4].legend()
