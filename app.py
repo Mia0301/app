@@ -23,6 +23,7 @@ start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '202
 end_date = st.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-06-03')
 start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
 end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
+df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 
 # 定義指標的計算函數
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
