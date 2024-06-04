@@ -83,108 +83,101 @@ df = calculate_kd(df)
 df = calculate_obv(df)
 df = calculate_rsi(df)
 
-def plot_bollinger_bands(ax, df):
-    ax.plot(df['Date'], df['Close'], label='Close Price', linewidth=1)
-    ax.plot(df['Date'], df['SMA'], label='SMA', linewidth=1)
-    ax.plot(df['Date'], df['Upper Band'], label='Upper Band', linewidth=1)
-    ax.plot(df['Date'], df['Lower Band'], label='Lower Band', linewidth=1)
-    ax.fill_between(df['Date'], df['Lower Band'], df['Upper Band'], color='gray', alpha=0.3)
-    ax.legend(fontsize='small')
-    ax.set_title('Bollinger Bands', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+import plotly.graph_objects as go
+def plot_bollinger_bands(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['SMA'], mode='lines', name='SMA'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Upper Band'], mode='lines', name='Upper Band'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Lower Band'], mode='lines', name='Lower Band'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Upper Band'], fill=None, mode='lines', line_color='rgba(0,0,0,0)'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Lower Band'], fill='tonexty', mode='lines', line_color='rgba(0,0,0,0)', fillcolor='rgba(128,128,128,0.3)'))
+    fig.update_layout(title='Bollinger Bands', xaxis_title='Date', yaxis_title='Price')
+    return fig
 
-def plot_macd(ax, df):
-    ax.plot(df['Date'], df['MACD'], label='MACD', linewidth=1)
-    ax.plot(df['Date'], df['Signal'], label='Signal', linewidth=1)
-    ax.bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color='gray')
-    ax.legend(fontsize='small')
-    ax.set_title('MACD', fontsize='medium')
-    ax.tick_params(axis='x',labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_macd(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['MACD'], mode='lines', name='MACD'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Signal'], mode='lines', name='Signal'))
+    fig.add_trace(go.Bar(x=df['Date'], y=df['MACD'] - df['Signal'], name='MACD Histogram'))
+    fig.update_layout(title='MACD', xaxis_title='Date', yaxis_title='Value')
+    return fig
 
-def plot_donchian_channels(ax, df):
-    ax.plot(df['Date'], df['Close'], label='Close Price', linewidth=1)
-    ax.plot(df['Date'], df['Upper Channel'], label='Upper Channel', linewidth=1)
-    ax.plot(df['Date'], df['Lower Channel'], label='Lower Channel', linewidth=1)
-    ax.fill_between(df['Date'], df['Lower Channel'], df['Upper Channel'], color='gray', alpha=0.3)
-    ax.legend(fontsize='small')
-    ax.set_title('Donchian Channels', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_donchian_channels(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Upper Channel'], mode='lines', name='Upper Channel'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Lower Channel'], mode='lines', name='Lower Channel'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Upper Channel'], fill=None, mode='lines', line_color='rgba(0,0,0,0)'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Lower Channel'], fill='tonexty', mode='lines', line_color='rgba(0,0,0,0)', fillcolor='rgba(128,128,128,0.3)'))
+    fig.update_layout(title='Donchian Channels', xaxis_title='Date', yaxis_title='Price')
+    return fig
 
-def plot_kd(ax, df):
-    ax.plot(df['Date'], df['%K'], label='%K', linewidth=1)
-    ax.plot(df['Date'], df['%D'], label='%D', linewidth=1)
-    ax.legend(fontsize='small')
-    ax.set_title('K and D lines', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_kd(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['%K'], mode='lines', name='%K'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['%D'], mode='lines', name='%D'))
+    fig.update_layout(title='K and D lines', xaxis_title='Date', yaxis_title='Value')
+    return fig
 
-def plot_obv(ax, df):
-    ax.plot(df['Date'], df['OBV'], label='OBV', linewidth=1)
-    ax.legend(fontsize='small')
-    ax.set_title('OBV', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_obv(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['OBV'], mode='lines', name='OBV'))
+    fig.update_layout(title='OBV', xaxis_title='Date', yaxis_title='Value')
+    return fig
 
-def plot_candlestick_ma(ax, df):
-    ax.plot(df['Date'], df['Close'], label='Close Price', linewidth=1)
-    ax.plot(df['Date'], df['Close'].rolling(window=20).mean(), label='20-day MA', linewidth=1)
-    ax.plot(df['Date'], df['Close'].rolling(window=50).mean(), label='50-day MA', linewidth=1)
-    ax.legend(fontsize='small')
-    ax.set_title('Candlestick Chart with Moving Averages', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_candlestick_ma(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'].rolling(window=20).mean(), mode='lines', name='20-day MA'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'].rolling(window=50).mean(), mode='lines', name='50-day MA'))
+    fig.update_layout(title='Candlestick Chart with Moving Averages', xaxis_title='Date', yaxis_title='Price')
+    return fig
 
-def plot_rsi(ax, df):
-    ax.plot(df['Date'], df['RSI'], label='RSI', linewidth=1)
-    ax.axhline(70, color='red', linestyle='--')
-    ax.axhline(30, color='green', linestyle='--')
-    ax.legend(fontsize='small')
-    ax.set_title('RSI', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
-    ax.tick_params(axis='y', labelsize='small')
+def plot_rsi(df):
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['RSI'], mode='lines', name='RSI'))
+    fig.add_shape(type='line', x0=df['Date'].min(), y0=70, x1=df['Date'].max(), y1=70, line=dict(color='Red', dash='dash'))
+    fig.add_shape(type='line', x0=df['Date'].min(), y0=30, x1=df['Date'].max(), y1=30, line=dict(color='Green', dash='dash'))
+    fig.update_layout(title='RSI', xaxis_title='Date', yaxis_title='Value')
+    return fig
 
+# Load your dataframe 'df' here
 
-# 绘制布林通道 (Bollinger Bands)
+# Display plots in Streamlit
+st.set_option('deprecation.showPyplotGlobalUse', False)
+
+# Bollinger Bands
 with st.expander("Bollinger Bands"):
-    fig, ax = plt.subplots()
-    plot_bollinger_bands(ax, df)
-    st.pyplot(fig)
+    fig = plot_bollinger_bands(df)
+    st.plotly_chart(fig)
 
-# 绘制MACD
+# MACD
 with st.expander("MACD"):
-    fig, ax = plt.subplots()
-    plot_macd(ax, df)
-    st.pyplot(fig)
+    fig = plot_macd(df)
+    st.plotly_chart(fig)
 
-# 绘制唐奇安通道 (Donchian Channels)
+# Donchian Channels
 with st.expander("Donchian Channels"):
-    fig, ax = plt.subplots()
-    plot_donchian_channels(ax, df)
-    st.pyplot(fig)
+    fig = plot_donchian_channels(df)
+    st.plotly_chart(fig)
 
-# 绘制K、D线 (K and D lines)
+# K and D lines
 with st.expander("K and D lines"):
-    fig, ax = plt.subplots()
-    plot_kd(ax, df)
-    st.pyplot(fig)
+    fig = plot_kd(df)
+    st.plotly_chart(fig)
 
-# 绘制OBV
+# OBV
 with st.expander("OBV"):
-    fig, ax = plt.subplots()
-    plot_obv(ax, df)
-    st.pyplot(fig)
+    fig = plot_obv(df)
+    st.plotly_chart(fig)
 
-# 绘制K线图 (Candlestick Chart) 移动平均线
+# Candlestick Chart with Moving Averages
 with st.expander("Candlestick Chart with Moving Averages"):
-    fig, ax = plt.subplots()
-    plot_candlestick_ma(ax, df)
-    st.pyplot(fig)
+    fig = plot_candlestick_ma(df)
+    st.plotly_chart(fig)
 
-# 绘制RSI
+# RSI
 with st.expander("RSI"):
-    fig, ax = plt.subplots()
-    plot_rsi(ax, df)
-    st.pyplot(fig)
+    fig = plot_rsi(df)
+    st.plotly_chart(fig)
