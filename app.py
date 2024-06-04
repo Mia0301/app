@@ -7,7 +7,13 @@ import datetime
 
 st.set_page_config(layout = 'wide',initial_sidebar_state='expanded')
 
-st.sidebar.header('金融APP')
+st.sidebar.header('選擇開始與結束的日期, 區間:2022-01-03 至 2024-06-03')
+start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
+end_date = st.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-06-03')
+start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
+end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
+
+df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 
 html_temp = """
 		<div style="background-color:#BA55D3;padding:20px;border-radius:10px">
@@ -61,13 +67,6 @@ def calculate_rsi(df, period=14):
     df['RSI'] = 100 - (100 / (1 + rs))
     return df
 
-
-st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2024-06-03")
-start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
-end_date = st.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-06-03')
-start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
-end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
-df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 
 
 # 应用各种指标的计算
