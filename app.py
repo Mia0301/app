@@ -8,10 +8,16 @@ import datetime
 st.set_page_config(layout = 'wide',initial_sidebar_state='expanded')
 
 st.sidebar.header('選擇開始與結束的日期, 區間:2022-01-03 至 2024-06-03')
-st.sidebar.selectbox(start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03'))
-end_date = st.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-06-03')
-start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
-end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
+start_date_input = st.sidebar.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
+end_date_input = st.sidebar.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-06-03')
+
+# 轉換日期格式
+start_date = datetime.datetime.strptime(start_date_input, '%Y-%m-%d')
+end_date = datetime.datetime.strptime(end_date_input, '%Y-%m-%d')
+
+# 顯示所選日期
+st.write(f"開始日期: {start_date.strftime('%Y-%m-%d')}")
+st.write(f"結束日期: {end_date.strftime('%Y-%m-%d')}")
 
 
 html_temp = """
