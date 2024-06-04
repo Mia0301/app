@@ -100,7 +100,7 @@ def plot_macd(ax, df):
     ax.bar(df['Date'], df['MACD'] - df['Signal'], label='MACD Histogram', color='gray')
     ax.legend(fontsize='small')
     ax.set_title('MACD', fontsize='medium')
-    ax.tick_params(axis='x', labelsize='small')
+    ax.tick_params(axis='x',fontsize=10)
     ax.tick_params(axis='y', labelsize='small')
 
 def plot_donchian_channels(ax, df):
