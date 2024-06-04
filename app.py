@@ -18,7 +18,7 @@ end_date = datetime.datetime.strptime(end_date_input, '%Y-%m-%d')
 # 顯示所選日期
 st.write(f"開始日期: {start_date.strftime('%Y-%m-%d')}")
 st.write(f"結束日期: {end_date.strftime('%Y-%m-%d')}")
-
+st.snow()
 
 html_temp = """
 		<div style="background-color:#BA55D3;padding:20px;border-radius:10px">
