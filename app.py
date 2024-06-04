@@ -4,6 +4,11 @@ import pandas as pd
 import streamlit.components.v1 as stc 
 import matplotlib.pyplot as plt
 import datetime
+
+st.set_page_config(layout = 'wide',initial_sidebar_state='expanded')
+
+st.sidebar.header('金融APP')
+
 html_temp = """
 		<div style="background-color:#BA55D3;padding:20px;border-radius:10px">
 		<h1 style="color:white;text-align:center;">聯詠(3034)金融指標分析 </h1>
@@ -56,9 +61,6 @@ def calculate_rsi(df, period=14):
     df['RSI'] = 100 - (100 / (1 + rs))
     return df
 
-st.set_page_config(layout = 'wide',initial_sidebar_state='expanded')
-
-st.sidebar.header('金融APP')
 
 st.subheader("選擇開始與結束的日期, 區間:2022-01-03 至 2024-06-03")
 start_date = st.text_input('選擇開始日期 (日期格式: 2022-01-03)', '2022-01-03')
