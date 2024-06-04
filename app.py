@@ -13,7 +13,6 @@ end_date = st.text_input('選擇結束日期 (日期格式: 2024-06-03)', '2024-
 start_date = datetime.datetime.strptime(start_date,'%Y-%m-%d')
 end_date = datetime.datetime.strptime(end_date,'%Y-%m-%d')
 
-df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 
 html_temp = """
 		<div style="background-color:#BA55D3;padding:20px;border-radius:10px">
@@ -28,7 +27,7 @@ df_original.to_pickle('3034.T.pkl')
 # 讀取上傳的 Excel 文件
 file_path = '3034.T.pkl'
 df = pd.read_pickle(file_path)
-
+df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
     df['EMA_slow'] = df['Close'].ewm(span=slow_period, min_periods=slow_period).mean()
