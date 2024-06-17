@@ -181,3 +181,49 @@ with st.expander("Candlestick Chart with Moving Averages"):
 with st.expander("RSI"):
     fig = plot_rsi(df)
     st.plotly_chart(fig)
+
+# 程式交易部分
+st.sidebar.header('選擇交易策略')
+strategy = st.sidebar.selectbox('交易策略', ['進場'])
+
+# 交易參數
+st.sidebar.header('交易參數')
+stop_loss = st.sidebar.slider('交易停損量 (每個價格)', min_value=0.0, max_value=100.0, value=5.0, step=0.1)
+short_ma_period = st.sidebar.slider('短移動平均線的K棒週期數目', min_value=1, max_value=50, value=20)
+long_ma_period = st.sidebar.slider('長移動平均線的K棒週期數目', min_value=1, max_value=200, value=50)
+buy_amount = st.sidebar.slider('購買數量', min_value=1, max_value=1000, value=100)
+
+# 顯示交易圖表
+def plot_trading_strategy(df, short_ma_period, long_ma_period, stop_loss, buy_amount):
+    df['Short_MA'] = df['Close'].rolling(window=short_ma_period).mean()
+    df['Long_MA'] = df['Close'].rolling(window=long_ma_period).mean()
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Short_MA'], mode='lines', name=f'{short_ma_period}-day MA'))
+    fig.add_trace(go.Scatter(x=df['Date'], y=df['Long_MA'], mode='lines', name=f'{long_ma_period}-day MA'))
+    
+    buy_signals = []
+    sell_signals = []
+    position = False
+    
+    for i in range(len(df)):
+        if df['Short_MA'].iloc[i] > df['Long_MA'].iloc[i] and not position:
+            buy_signals.append((df['Date'].iloc[i], df['Close'].iloc[i]))
+            position = True
+        elif df['Short_MA'].iloc[i] < df['Long_MA'].iloc[i] and position:
+            sell_signals.append((df['Date'].iloc[i], df['Close'].iloc[i]))
+            position = False
+    
+    for signal in buy_signals:
+        fig.add_trace(go.Scatter(x=[signal[0]], y=[signal[1]], mode='markers', marker=dict(color='green', size=10), name='Buy Signal'))
+    
+    for signal in sell_signals:
+        fig.add_trace(go.Scatter(x=[signal[0]], y=[signal[1]], mode='markers', marker=dict(color='red', size=10), name='Sell Signal'))
+    
+    fig.update_layout(title='Trading Strategy', xaxis_title='Date', yaxis_title='Price')
+    return fig
+
+with st.expander("Trading Strategy"):
+    fig = plot_trading_strategy(df, short_ma_period, long_ma_period, stop_loss, buy_amount)
+    st.plotly_chart(fig)
