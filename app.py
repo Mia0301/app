@@ -184,7 +184,7 @@ with st.expander("RSI"):
 
 # 程式交易部分
 st.sidebar.header('選擇交易策略')
-strategy = st.sidebar.selectbox('交易策略', ['進場'])
+strategy = st.sidebar.selectbox('交易策略', ['進場:移動平均線黃金交叉short MA 向上突破 long MA;死亡交叉: short MA 向下突破 long MA'])
 
 # 交易參數
 st.sidebar.header('交易參數')
