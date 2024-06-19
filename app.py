@@ -34,6 +34,10 @@ df_original.to_pickle('3034.T.pkl')
 file_path = '3034.T.pkl'
 df = pd.read_pickle(file_path)
 df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= end_date)]
+
+st.subheader('股票數據表')
+st.dataframe(df)
+
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
     df['EMA_slow'] = df['Close'].ewm(span=slow_period, min_periods=slow_period).mean()
@@ -185,6 +189,7 @@ with st.expander("RSI"):
 # 程式交易部分
 st.sidebar.header('選擇交易策略')
 strategy = st.sidebar.selectbox('交易策略', ['進場:移動平均線黃金交叉short MA 向上突破 long MA;死亡交叉: short MA 向下突破 long MA'])
+
 
 # 交易參數
 st.sidebar.header('交易參數')
