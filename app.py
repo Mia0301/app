@@ -38,6 +38,15 @@ df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= e
 st.subheader('股票數據表')
 st.dataframe(df)
 
+st.subheader('股票價格走勢圖')
+fig, ax = plt.subplots()
+ax.plot(df['Date'], df['Open'], label='開盤價')
+ax.plot(df['Date'], df['Close'], label='收盤價')
+ax.set_xlabel('日期')
+ax.set_ylabel('價格')
+ax.legend()
+st.pyplot(fig)
+
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
     df['EMA_slow'] = df['Close'].ewm(span=slow_period, min_periods=slow_period).mean()
