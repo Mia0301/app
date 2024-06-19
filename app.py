@@ -40,12 +40,18 @@ st.dataframe(df)
 
 st.subheader('股票價格走勢圖')
 fig, ax = plt.subplots()
-ax.plot(df['Date'], df['Open'], label='開盤價')
-ax.plot(df['Date'], df['Close'], label='收盤價')
-ax.set_xlabel('日期')
-ax.set_ylabel('價格')
+ax.plot(df['Date'], df['Open'], label='Open Price')
+ax.plot(df['Date'], df['Close'], label='Close rice')
+ax.set_xlabel('Date')
+ax.set_ylabel('Price')
 ax.legend()
 st.pyplot(fig)
+
+st.subheader('數據分析')
+st.write('平均開盤價:', data['Open'].mean())
+st.write('平均收盤價:', data['Close'].mean())
+st.write('最大開盤價:', data['Open'].max())
+st.write('最大收盤價:', data['Close'].max())
 
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
