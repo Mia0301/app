@@ -39,10 +39,10 @@ df = df_original[(df_original['Date'] >= start_date) & (df_original['Date'] <= e
 st.subheader('股票數據表')
 st.dataframe(df)
 
-st.subheader('股票價格走勢圖')
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=df['Date'], y=df['Open'], mode='lines', name='Open Price'))
-fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
+with st.subheader('股票價格走勢圖')
+  fig = go.Figure()
+  fig.add_trace(go.Scatter(x=df['Date'], y=df['Open'], mode='lines', name='Open Price'))
+  fig.add_trace(go.Scatter(x=df['Date'], y=df['Close'], mode='lines', name='Close Price'))
 
 fig.update_layout(
     title='股票價格走勢圖',
