@@ -48,10 +48,10 @@ ax.legend()
 st.pyplot(fig)
 
 st.subheader('數據分析')
-st.write('平均開盤價:', data['Open'].mean())
-st.write('平均收盤價:', data['Close'].mean())
-st.write('最大開盤價:', data['Open'].max())
-st.write('最大收盤價:', data['Close'].max())
+st.write('平均開盤價:', df['Open'].mean())
+st.write('平均收盤價:', df['Close'].mean())
+st.write('最大開盤價:', df['Open'].max())
+st.write('最大收盤價:', df['Close'].max())
 
 def calculate_macd(df, fast_period=12, slow_period=26, signal_period=9):
     df['EMA_fast'] = df['Close'].ewm(span=fast_period, min_periods=fast_period).mean()
